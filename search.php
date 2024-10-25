@@ -1,47 +1,44 @@
 <?php
-session_set_cookie_params([
-    'httponly' => true, 
-    'samesite' => 'Lax' // Cross-site 요청에 대한 보호(Lax, Strict, None)
-]);
+// session_set_cookie_params([
+//     'httponly' => true, 
+//     'samesite' => 'Lax'
+// ]);
 session_start();
 
 require_once 'config/db.php';
 require_once 'queries.php';
 
-// 검색어 가져오기
+
 $query = isset($_GET['q']) ? $_GET['q'] : '';
-$query = htmlspecialchars($query);
+$query = trim($query);
+$query = strtolower($query);
 
 if (empty($query)) {
     echo "<script>alert('검색어를 입력하세요.'); history.back();</script>";
     exit();
 }
 
-// if (strtolower($query) == "post") {
-//     echo "<script>alert('post는 충돌이 발생하여 금지된 단어입니다. 다른 단어로 시도해주세요.'); history.back();</script>";
-// }
 
-$search_query = "%" . strtolower($query) . "%";
+$search_query = "%" . $query . "%";
 
-// 검색어에 대한 게시글 검색
-$stmt = $pdo->prepare("
+$search_q = "
     SELECT posts.id, posts.title, posts.created_at, users.username, posts.board_id 
     FROM posts 
     JOIN users ON posts.user_id = users.id 
-    WHERE posts.title LIKE ? OR posts.content LIKE ?
+    WHERE posts.title LIKE '$search_query' OR posts.content LIKE '$search_query'
     ORDER BY posts.created_at DESC
-");
-$search_query = "%" . $query . "%";
-$stmt->execute([$search_query, $search_query]);
-$posts = $stmt->fetchAll();
+";
+
+// $stmt = $pdo->query($search_q);
+$result = $pdo->query($search_q);
+$posts = $result->fetchAll();
 
 $board_ids = array_unique(array_column($posts, 'board_id')); // board_id 필드의 값들만 새로운 배열로 생성 및 중복 제거
 $boards = [];  // 빈 배열로 초기화
 if (!empty($board_ids)) {
-    $in  = str_repeat('?,', count($board_ids) -1 ) . '?'; // board_id의 개수만큼 ? 자리표시자 생성
-    $stmt = $pdo->prepare("SELECT id, name FROM boards WHERE id IN ($in)");
-    $stmt->execute([...$board_ids]);
-    $boards = $stmt->fetchAll();
+    $in  = implode(',', $board_ids);
+    $result = $pdo->query("SELECT id, name FROM boards WHERE id IN ($in)");
+    $boards = $result->fetchAll();
 }
 ?>
 
@@ -73,7 +70,7 @@ if (!empty($board_ids)) {
         <?php require_once 'sidebar.php'?>
         <section id="content">
 
-        <h2>검색어: "<?php echo htmlspecialchars($query); ?>"</h2>
+        <h2>검색어: "<?php echo $query; ?>"</h2>
         <?php if (count($posts) > 0): ?>
             <table>
                 <thead>
@@ -105,11 +102,11 @@ if (!empty($board_ids)) {
                         </td>
                         <td>
                             <a href="post.php?id=<?php echo $post['id']; ?>&board=<?php echo $post['board_id']; ?>">
-                                <?php echo htmlspecialchars($post['title']); ?>
+                                <?php echo $post['title']; ?>
                             </a>
                         </td>
                         <td>
-                            <?php echo htmlspecialchars($post['username']); ?>
+                            <?php echo $post['username']; ?>
                         </td>
                         <td>
                             <?php echo date('Y-m-d H:i', strtotime($post['created_at'])); ?>

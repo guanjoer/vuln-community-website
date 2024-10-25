@@ -1,8 +1,8 @@
 <?php
-session_set_cookie_params([
-    'httponly' => true, 
-    'samesite' => 'Lax' // Cross-site 요청에 대한 보호(Lax, Strict, None)
-]);
+// session_set_cookie_params([
+//     'httponly' => true, 
+//     'samesite' => 'Lax' // Cross-site 요청에 대한 보호(Lax, Strict, None)
+// ]);
 
 session_start();
 
@@ -17,18 +17,16 @@ $offset = ($page - 1) * $posts_per_page;
 
 // 게시판 정보 가져오기
 if (isset($_GET['id'])) {
-    $board_id = htmlspecialchars($_GET['id']);
+    $board_id = $_GET['id'];
 
-    $total_posts_stmt = $pdo->prepare("SELECT COUNT(*) FROM posts WHERE board_id = ?");
-    $total_posts_stmt->execute([$board_id]);
-    $total_posts = $total_posts_stmt->fetchColumn();
+    $total_posts_query = $pdo->query("SELECT COUNT(*) FROM posts WHERE board_id = $board_id");
+    $total_posts = $total_posts_query->fetchColumn();
     
     // 각 게시판에 해당하는 총 페이지 수
     $total_pages = ceil($total_posts / $posts_per_page);
 
-    $stmt = $pdo->prepare("SELECT * FROM boards WHERE id = ?");
-    $stmt->execute([$board_id]);
-    $board = $stmt->fetch();
+    $result = $pdo->query("SELECT * FROM boards WHERE id = $board_id");
+    $board = $result->fetch();
 
     if (!$board) {
         echo "<script>alert('존재하지 않는 게시판입니다.'); window.location.href='index.php';</script>";
@@ -72,7 +70,7 @@ if (isset($_GET['id'])) {
     <link rel="stylesheet" href="styles/main.css">
     <link rel="icon" href="favicon/favicon.ico" type="image/x-icon">
     <?php if(isset($_GET['id'])): ?>
-        <title><?php echo htmlspecialchars($board['name']); ?></title>
+        <title><?php echo $board['name']; ?></title>
     <?php else: ?>
         <title>전체글</title>
     <?php endif; ?>
@@ -92,7 +90,7 @@ if (isset($_GET['id'])) {
 
         <section id="content">
             <?php if(isset($_GET['id'])): ?>
-                <h1><?php echo htmlspecialchars($board['name']); ?></h1>
+                <h1><?php echo $board['name']; ?></h1>
             <?php else: ?>
                 <h2>전체글</h2>
             <?php endif; ?>
@@ -113,12 +111,12 @@ if (isset($_GET['id'])) {
                         <tr>
                             <td><?php echo $counter; ?></td>
                             <td>
-                                <a href="post.php?id=<?php echo htmlspecialchars($post['id']); ?>">
-                                        <?php echo htmlspecialchars($post['title']); ?>
+                                <a href="post.php?id=<?php echo $post['id']; ?>">
+                                        <?php echo $post['title']; ?>
                                 </a>
                             </td>
                             <td>
-                                <?php echo htmlspecialchars($post['username']); ?>
+                                <?php echo $post['username']; ?>
                             </td>
                             <td>
                                 <?php echo date('Y-m-d H:i', strtotime($post['created_at'])); ?>
@@ -145,12 +143,12 @@ if (isset($_GET['id'])) {
                                 <tr>
                                     <td><?php echo $counter ?></td>
                                     <td>
-                                        <a href="post.php?id=<?php echo htmlspecialchars($post['id']); ?>">
-                                            <?php echo htmlspecialchars($post['title']); ?>
+                                        <a href="post.php?id=<?php echo $post['id']; ?>">
+                                            <?php echo $post['title']; ?>
                                         </a>
                                     </td>
                                     <td>
-                                        <?php echo htmlspecialchars($post['username']); ?>
+                                        <?php echo $post['username']; ?>
                                     </td>
                                     <td>
                                         <?php echo date('Y-m-d H:i', strtotime($post['created_at'])); ?>

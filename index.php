@@ -1,8 +1,8 @@
 <?php
-session_set_cookie_params([
-    'httponly' => true, 
-    'samesite' => 'Lax' // Cross-site 요청에 대한 보호(Lax, Strict, None)
-]);
+// session_set_cookie_params([
+//     'httponly' => true, 
+//     'samesite' => 'Lax' // Cross-site 요청에 대한 보호(Lax, Strict, None)
+// ]);
 
 session_start();
 
@@ -90,10 +90,10 @@ $posts = $stmt->fetchAll();
                             <td><?php echo $counter; ?></td>
                             <td>
                                 <a href="post.php?id=<?php echo $post['id']."&board=".$post['board_id']; ?>">
-                                    <?php echo htmlspecialchars($post['title']); ?>
+                                    <?php echo $post['title']; ?>
                                 </a>
                             </td>
-                            <td><?php echo htmlspecialchars($post['username']); ?></td>
+                            <td><?php echo $post['username']; ?></td>
                             <td><?php echo date('Y-m-d H:i', strtotime($post['created_at'])); ?></td>
                         </tr>
                     <?php 

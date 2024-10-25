@@ -1,18 +1,17 @@
 <?php
-session_set_cookie_params([
-    'httponly' => true, 
-    'samesite' => 'Lax' // Cross-site 요청에 대한 보호(Lax, Strict, None)
-]);
+// session_set_cookie_params([
+//     'httponly' => true, 
+//     'samesite' => 'Lax' // Cross-site 요청에 대한 보호(Lax, Strict, None)
+// ]);
 session_start();
 
 require_once 'config/db.php';
 
 // 게시글 정보 가져오기
 if (isset($_GET['id'])) {
-    $post_id = htmlspecialchars($_GET['id']);
-    $stmt = $pdo->prepare("SELECT * FROM posts WHERE id = ?");
-    $stmt->execute([$post_id]);
-    $post = $stmt->fetch();
+    $post_id = $_GET['id'];
+    $result = $pdo->query("SELECT * FROM posts WHERE id = '$post_id'");
+    $post = $result->fetch();
 
     if (!$post) {
         echo "<script>alert('존재하지 않는 게시글입니다.'); history.back();</script>";
@@ -26,9 +25,8 @@ if (isset($_GET['id'])) {
     }
 
     // 기존 파일 정보 가져오기
-    $stmt = $pdo->prepare("SELECT * FROM uploads WHERE post_id = ?");
-    $stmt->execute([$post_id]);
-    $file = $stmt->fetch();
+    $result = $pdo->query("SELECT * FROM uploads WHERE post_id = '$post_id'");
+    $file = $result->fetch();
 } else {
     header("Location: index.php");
     exit();
@@ -115,17 +113,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div id="create-post-content">
         <h1>EDIT POST</h1>
 
-        <form method="post" action="edit_post.php?id=<?php echo htmlspecialchars($post_id); ?>" enctype="multipart/form-data">
+        <form method="post" action="edit_post.php?id=<?php echo $post_id; ?>" enctype="multipart/form-data">
             <label for="title">TITLE</label>
-            <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($post['title']); ?>" required>
+            <input type="text" id="title" name="title" value="<?php echo $post['title']; ?>" required>
 
             <label for="content">CONTENT</label>
-            <textarea id="content" name="content" rows="10" required><?php echo htmlspecialchars($post['content']); ?></textarea>
+            <textarea id="content" name="content" rows="10" required><?php echo $post['content']; ?></textarea>
 
             <div id="upload-file">
                 <label for="uploaded_file">UPLOADED FILE</label>
                 <?php if ($file): ?>
-                    <p><a href="<?php echo htmlspecialchars($file['file_path']); ?>" download><?php echo htmlspecialchars($file['file_name']); ?></a></p>
+                    <p><a href="<?php echo $file['file_path']; ?>" download><?php echo $file['file_name']; ?></a></p>
                     <input type="file" id="uploaded_file" name="uploaded_file">
                 <?php else: ?>
                     <input type="file" id="uploaded_file" name="uploaded_file">

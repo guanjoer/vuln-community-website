@@ -1,8 +1,8 @@
 <?php
-session_set_cookie_params([
-    'httponly' => true, 
-    'samesite' => 'Lax'
-]);
+// session_set_cookie_params([
+//     'httponly' => true, 
+//     'samesite' => 'Lax'
+// ]);
 session_start();
 
 // CSRF Token 설정
@@ -20,8 +20,9 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // 게시판 목록 가져오기
-$stmt = $pdo->query("SELECT id, name FROM boards ORDER BY name ASC");
-$boards = $stmt->fetchAll();
+$query = "SELECT id, name FROM boards ORDER BY name ASC";
+$result = $pdo->query($query);
+$boards = $result->fetchAll();
 ?>
 
 <!DOCTYPE html>
