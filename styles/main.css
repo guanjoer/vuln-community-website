@@ -1,0 +1,57 @@
+.header-2 a {
+	color: #474747;
+	text-decoration: none;
+}
+
+.header-2 a:hover {
+	text-decoration: underline;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border-top: 0.1px solid #999999;
+}
+
+th, td {
+    padding: 10px;
+}
+
+th {
+	text-align: center;
+    font-weight: bold;
+	padding-top: 1.5rem;
+}
+
+tbody tr:hover {
+    background-color: #f7f7f7;
+	cursor: pointer;
+}
+
+/* 번호 필드의 너비를 좁게 설정 */
+/* 각 열의 너비 조정 */
+th:nth-child(1), td:nth-child(1) {  /* 번호 열 */
+    width: 50px;
+    text-align: center;
+}
+
+th:nth-child(3), td:nth-child(3) {  /* 이름 열 */
+    width: 100px;
+    text-align: center;
+}
+
+th:nth-child(4), td:nth-child(4) {  /* 작성일 열 */
+    width: 150px;
+    text-align: center;
+}
+
+th:nth-child(2), td:nth-child(2) {  /* 제목 열 */
+    width: auto;  /* 나머지 공간을 제목 열에 할당 */
+}
+
+table a {
+	text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+}

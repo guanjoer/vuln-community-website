@@ -1,0 +1,134 @@
+.board-name a{
+	text-decoration: none;
+	color: #007BFF;
+	font-weight: 500;
+	margin-bottom: 0;
+}
+
+h1 {
+	font-size: 2rem;
+	margin-bottom: 0.7rem;
+}
+
+#post-profile {
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+    object-fit: cover;
+}
+
+.post-profile-info {
+	display: flex;
+	border-bottom: 0.5px solid rgb(212, 212, 212);
+	margin-bottom: 0.5rem;
+	padding-bottom: 1.7rem;
+}
+.post-profile-info p {
+	margin-left: 0.5rem;
+	margin-bottom: 0;
+	margin-top: 0;
+	font-weight: bold;
+}
+
+.post-profile-info-2 {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: flex-start;
+}
+
+.post-profile-info-2 span {
+	color: rgb(132, 132, 132);
+	font-size: 0.8rem;
+	margin-left: 0.5rem;
+}
+
+.post-content {
+	margin-top: 3rem;
+	margin-bottom: 5rem;
+}
+
+h2 {
+	font-size: 1.2rem;
+    font-weight: 900;
+    font-style: italic;
+    color: #5b5b5b;
+}
+
+.post-btn {
+	padding-bottom: 1.5rem;
+}
+
+
+.post-btn2{
+	padding-bottom: 0;
+	color: #fff;
+    background-color: #5a5a5a;
+	padding: 0.5rem 1.5rem;
+	border-radius: 4px;
+	font-weight: bold;
+	border: none;
+	margin-bottom: 2rem;
+	cursor: pointer;
+	font-size: 1rem;
+}
+
+.post-btn2:hover {
+	background-color: #797979;;
+}
+.post-btn a{
+	color: #fff;
+    background-color: #5a5a5a;
+	text-decoration: none;
+	padding: 0.5rem 1.5rem;
+	border-radius: 4px;
+	font-weight: bold;
+}
+
+.post-btn a:hover {
+	background-color: #6b6b6b;
+}
+
+textarea {
+	width: 100%;
+	margin-bottom: 1rem;
+	resize: vertical;
+}
+
+textarea:active,
+textarea:focus {
+	outline: none;
+}
+
+.list-btn {
+	padding: 10px 20px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.list-btn:hover {
+	background-color: #ddd;;
+}
+
+.comment-display {
+	font-weight: 500;
+	font-size: 0.8rem;
+	font-style: italic;
+	margin-bottom: 1rem;
+}
+
+#comment-title-2 {
+	margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-style: normal;
+    font-size: 1.4rem;
+    color: rgb(30 30 30);
+}
+
+#comment-delete-btn a {
+	text-decoration: underline;
+	font-weight: 500;
+	color: #291f1f;
+}

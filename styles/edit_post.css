@@ -1,0 +1,28 @@
+input[type="text"] {
+	/* padding: 1rem 0.3rem; */
+	padding: 1rem 20px;
+	width: 87%;
+}
+
+button {
+	display: block;
+}
+
+button[type="submit"] {
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
+
+#back-btn {
+	padding: 10px 20px;
+    border: none;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    border-radius: 4px;
+	color: rgb(56, 56, 56);
+	text-decoration: none;
+}
+
+#back-btn:hover {
+	background-color: #ddd;
+}

@@ -1,0 +1,34 @@
+#info {
+	display: flex;
+	justify-content: space-around;
+}
+
+.info-content {
+	border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    width: 20%;
+    padding: 1rem;
+    margin: 0 auto;
+    margin-top: 2rem;
+}
+
+.content-title a{
+	font: inherit;
+	color: #525252;
+	text-decoration: none;
+}
+
+.content-title a:hover {
+	color: #101010;
+}
+
+.content-count {
+	font-weight: bold;
+    font-size: 1.7rem;
+    color: #141414;
+}
+
+#content h1 {
+	color: rgb(41, 41, 41);
+}

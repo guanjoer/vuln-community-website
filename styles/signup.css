@@ -1,0 +1,15 @@
+.input-group a {
+	display: block;
+	font-size: 0.9rem;
+    color: #5c5c5c;
+    text-decoration: none;
+    font-style: italic;
+}
+
+.input-group a:hover {
+	text-decoration: underline;
+}
+
+.input-group input {
+	margin-bottom: 0.5rem;
+}
