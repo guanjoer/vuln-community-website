@@ -12,6 +12,8 @@ require_once 'queries.php';
 $query = isset($_GET['q']) ? $_GET['q'] : '';
 $query = trim($query);
 $query = strtolower($query);
+$output = $query;
+$query = addslashes($query);
 
 if (empty($query)) {
     echo "<script>alert('검색어를 입력하세요.'); history.back();</script>";
@@ -70,7 +72,7 @@ if (!empty($board_ids)) {
         <?php require_once 'sidebar.php'?>
         <section id="content">
 
-        <h2>검색어: "<?php echo $query; ?>"</h2>
+        <h2>검색어: "<?php echo $output; ?>"</h2>
         <?php if (count($posts) > 0): ?>
             <table>
                 <thead>

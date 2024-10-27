@@ -11,11 +11,13 @@ require_once 'queries.php';
 
 
 $post_id = $_GET['id'];
-$result = $pdo->query("SELECT * FROM posts WHERE id = $post_id");
+$post_id = addslashes($post_id);
+$result = $pdo->query("SELECT * FROM posts WHERE id = '$post_id'");
 $post = $result->fetch();
 
 
 $post_user_id = $post['user_id'];
+$post_user_id = $post_user_id;
 $result = $pdo->query("SELECT * FROM users WHERE id = $post_user_id");
 $post_user = $result->fetch();
 
@@ -32,21 +34,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_content'])) {
         exit();
     }
 
-    $comment_content = $_POST['comment_content'];
+    $comment_content = addslashes($_POST['comment_content']);
     $user_id = $_SESSION['user_id'];
 
-    $result = $pdo->query("INSERT INTO comments (post_id, user_id, content) VALUES ($post_id, $user_id, $comment_content)");
+    $result = $pdo->exec("INSERT INTO comments (post_id, user_id, content) VALUES ('$post_id', '$user_id', '$comment_content')");
 
     echo "<script>alert('댓글이 성공적으로 작성되었습니다.'); window.location.href='post.php?id=$post_id';</script>";
     exit();
 }
 
 // 댓글 목록 가져오기
-$result = $pdo->query("SELECT comments.*, users.username FROM comments JOIN users ON comments.user_id = users.id WHERE comments.post_id = $post_id ORDER BY comments.created_at ASC");
+$result = $pdo->query("SELECT comments.*, users.username FROM comments JOIN users ON comments.user_id = users.id WHERE comments.post_id = '$post_id' ORDER BY comments.created_at ASC");
 $comments = $result->fetchAll();
 
 // 파일 정보 가져오기
-$result = $pdo->query("SELECT * FROM uploads WHERE post_id = $post_id");
+$result = $pdo->query("SELECT * FROM uploads WHERE post_id = '$post_id'");
 $files = $result->fetchAll();
 
 // 게시판 정보 가져오기

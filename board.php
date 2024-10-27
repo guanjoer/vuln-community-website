@@ -34,27 +34,25 @@ if (isset($_GET['id'])) {
     }
 
     // 게시판에 속하는 글 목록 가져오기
-    $stmt = $pdo->prepare("SELECT posts.id, posts.title, posts.created_at, users.username 
+    $result = $pdo->query("SELECT posts.id, posts.title, posts.created_at, users.username 
                            FROM posts 
                            JOIN users ON posts.user_id = users.id 
-                           WHERE posts.board_id = ? 
+                           WHERE posts.board_id = $board_id
                            ORDER BY posts.created_at DESC
                            LIMIT $posts_per_page OFFSET $offset");
-    $stmt->execute([$board_id]);
-    $posts = $stmt->fetchAll();
+    $posts = $result->fetchAll();
 } else {
     $total_posts_stmt = $pdo->query("SELECT COUNT(*) FROM posts");
     $total_posts = $total_posts_stmt->fetchColumn();
     
     $total_pages = ceil($total_posts / $posts_per_page);
 
-    $stmt = $pdo->prepare("SELECT posts.id, posts.title, posts.created_at, users.username 
+    $result = $pdo->query("SELECT posts.id, posts.title, posts.created_at, users.username 
                            FROM posts 
                            JOIN users ON posts.user_id = users.id 
                            ORDER BY posts.created_at DESC
                            LIMIT $posts_per_page OFFSET $offset");
-    $stmt->execute();
-    $all_posts = $stmt->fetchAll();
+    $all_posts = $result->fetchAll();
 }
 ?>
 
