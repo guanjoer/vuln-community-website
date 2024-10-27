@@ -128,6 +128,15 @@ body {
     aspect-ratio: 16 / 9;
 	min-width: 500px;
 }
+
+#content h1 {
+	color: #3d3d3d;
+}
+
+#content p {
+	color: #4e4e4e;
+}
+
 #main-container {
 	display: flex;
 	justify-content: center;
@@ -148,7 +157,8 @@ ul li {
 }
 ul li a {
 	text-decoration: none;
-	color: #007BFF;
+	/* color: #007BFF; */
+	color: #8989d8;
 	font-weight: bold;
 }
 ul li span {
@@ -239,4 +249,8 @@ ul li span {
 #pagination .active {
     color: #c78ec7;
 	font-weight: bold;
+}
+
+.board-list li a {
+	color: #c78ec7;
 }

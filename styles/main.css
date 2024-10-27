@@ -55,3 +55,19 @@ table a {
     color: #007BFF;
     font-weight: bold;
 }
+
+.table-header a,th {
+    color:#3d3d3d;
+}
+
+.table-header a:hover {
+    text-decoration: underline;
+}
+
+tbody a {
+    color:#3d3d3d;
+}
+
+tbody a:hover {
+    text-decoration: underline;
+}

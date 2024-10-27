@@ -1,8 +1,12 @@
 .board-name a{
 	text-decoration: none;
-	color: #007BFF;
+	color: #8989d8;
 	font-weight: 500;
 	margin-bottom: 0;
+}
+
+.board-name a:hover{
+	text-decoration: underline;
 }
 
 h1 {

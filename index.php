@@ -7,16 +7,19 @@
 session_start();
 
 // CSRF Token
-if (!isset($_SESSION['csrf_token'])) {
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-}
+// if (!isset($_SESSION['csrf_token'])) {
+//     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+// }
 
 require_once 'config/db.php';
 
 require_once 'queries.php';
 
 // 현재 페이지 번호
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+$order = isset($_GET['order']) && $_GET['order'] === 'asc' ? 'ASC' : 'DESC';
+$new_order = $order === 'ASC' ? 'desc' : 'asc';
 
 // 한 페이지에 표시할 게시글 수
 $posts_per_page = 10;
@@ -35,7 +38,7 @@ $total_pages = ceil($total_posts / $posts_per_page);
 $stmt = $pdo->query("SELECT posts.id, posts.title, posts.created_at, users.username, posts.board_id 
                      FROM posts 
                      JOIN users ON posts.user_id = users.id 
-                     ORDER BY posts.created_at DESC 
+                     ORDER BY posts.created_at $order 
                      LIMIT $posts_per_page OFFSET $offset");
 $posts = $stmt->fetchAll();
 ?>
@@ -72,12 +75,14 @@ $posts = $stmt->fetchAll();
             <h2 class="header-2"><a href="board.php">전체글 보기</a></h2>
             <?php if($posts): ?>
             <table>
-                <thead>
+                <thead class="table-header">
                     <tr>
                         <th>번호</th>
                         <th>제목</th>
                         <th>글쓴이</th>
-                        <th>작성일</th>
+                        <th>
+                            <a href="?page=<?php echo $page; ?><?php echo isset($board_id) ? '&id=' . $board_id : ''; ?>&order=<?php echo $new_order; ?>">작성일</a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -127,6 +132,5 @@ $posts = $stmt->fetchAll();
         </section>
     </div>
     
-    <a href="redirect.php?url=http://127.0.0.1/community_site/post.php?id=27&board=3">Redirection Test</button>
 </body>
 </html>

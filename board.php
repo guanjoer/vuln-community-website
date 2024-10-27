@@ -10,22 +10,26 @@ require_once 'config/db.php';
 
 require_once 'queries.php';
 
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
 $posts_per_page = 10;
-$offset = ($page - 1) * $posts_per_page;
+$offset = ((int)$page - 1) * $posts_per_page;
+
+// Default: DESC
+$order = isset($_GET['order']) && $_GET['order'] === 'asc' ? 'ASC' : 'DESC';
+$new_order = $order === 'ASC' ? 'desc' : 'asc';
 
 
-// 게시판 정보 가져오기
 if (isset($_GET['id'])) {
     $board_id = $_GET['id'];
+    $board_id = addslashes($board_id);
 
-    $total_posts_query = $pdo->query("SELECT COUNT(*) FROM posts WHERE board_id = $board_id");
+    $total_posts_query = $pdo->query("SELECT COUNT(*) FROM posts WHERE board_id = '$board_id'");
     $total_posts = $total_posts_query->fetchColumn();
     
     // 각 게시판에 해당하는 총 페이지 수
     $total_pages = ceil($total_posts / $posts_per_page);
 
-    $result = $pdo->query("SELECT * FROM boards WHERE id = $board_id");
+    $result = $pdo->query("SELECT * FROM boards WHERE id = '$board_id'");
     $board = $result->fetch();
 
     if (!$board) {
@@ -37,8 +41,8 @@ if (isset($_GET['id'])) {
     $result = $pdo->query("SELECT posts.id, posts.title, posts.created_at, users.username 
                            FROM posts 
                            JOIN users ON posts.user_id = users.id 
-                           WHERE posts.board_id = $board_id
-                           ORDER BY posts.created_at DESC
+                           WHERE posts.board_id = '$board_id'
+                           ORDER BY posts.created_at $order
                            LIMIT $posts_per_page OFFSET $offset");
     $posts = $result->fetchAll();
 } else {
@@ -50,7 +54,7 @@ if (isset($_GET['id'])) {
     $result = $pdo->query("SELECT posts.id, posts.title, posts.created_at, users.username 
                            FROM posts 
                            JOIN users ON posts.user_id = users.id 
-                           ORDER BY posts.created_at DESC
+                           ORDER BY posts.created_at $order
                            LIMIT $posts_per_page OFFSET $offset");
     $all_posts = $result->fetchAll();
 }
@@ -92,19 +96,22 @@ if (isset($_GET['id'])) {
             <?php else: ?>
                 <h2>전체글</h2>
             <?php endif; ?>
+            <p>현재 페이지: <?php echo $page; ?></p>
 
             <?php if (isset($_GET['id']) && $posts): ?>
             <table>
-                <thead>
+                <thead class="table-header">
                     <tr>
                         <th>번호</th>
                         <th>제목</th>
                         <th>글쓴이</th>
-                        <th>작성일</th>
+                        <th>
+                            <a href="?page=<?php echo $page; ?><?php echo isset($board_id) ? '&id=' . $board_id : ''; ?>&order=<?php echo $new_order; ?>">작성일</a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $counter = $total_posts - ($page - 1) * $posts_per_page; ?>
+                    <?php $counter = $total_posts - ((int)$page - 1) * $posts_per_page; ?>
                     <?php foreach ($posts as $post): ?>
                         <tr>
                             <td><?php echo $counter; ?></td>
@@ -136,7 +143,7 @@ if (isset($_GET['id'])) {
                             </tr>
                         </thead>
                     <tbody>
-                            <?php $counter = $total_posts - ($page - 1) * $posts_per_page; ?>
+                            <?php $counter = $total_posts - ((int)$page - 1) * $posts_per_page; ?>
                             <?php foreach ($all_posts as $post): ?>
                                 <tr>
                                     <td><?php echo $counter ?></td>

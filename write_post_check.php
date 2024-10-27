@@ -25,7 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_SESSION['user_id'];
     $board_id = $_POST['board_id'];
     $title = $_POST['title'];
+    $title = addslashes($title);
     $content = $_POST['content'];
+    $content = addslashes($content);
 
 	
     $upload_success = true;
@@ -43,7 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if (!in_array($file_extension, $disallowed_exts)) {
             $upload_dir = 'uploads/';
-            $file_name =  $file_name_without_ext.'_'.uniqid() . '.' . $file_extension;
+            // $file_name =  $file_name_without_ext.'_'.uniqid() . '.' . $file_extension;
+            $file_name =  $file_name_without_ext. '.' . $file_extension;
             $file_path = $upload_dir . $file_name;
 
             if (!move_uploaded_file($_FILES['uploaded_file']['tmp_name'], $file_path)) {
@@ -60,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 파일 업로드 성공 시 게시글 저장
     if ($upload_success) {
-        $result = $pdo->exec("INSERT INTO posts (user_id, board_id, title, content) VALUES ('$user_id', '$board_id', '$title', '$content')");
+        $result = $pdo->exec("INSERT INTO posts (user_id, board_id, title, content) VALUES ($user_id, $board_id, '$title', '$content')");
 
         // 게시글 ID
         $post_id = $pdo->lastInsertId();
