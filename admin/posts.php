@@ -69,6 +69,7 @@ $posts = $stmt->fetchAll();
 				<th>제목</th>
 				<th>글쓴이</th>
 				<th>작성일</th>
+				<th>삭제</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -85,6 +86,9 @@ $posts = $stmt->fetchAll();
 					</td>
 					<td><?php echo htmlspecialchars($post['username']); ?></td>
 					<td><?php echo date('Y-m-d H:i', strtotime($post['created_at'])); ?></td>
+					<td>
+						<a href="delete_post.php?id=<?php echo $post['id']; ?>" onclick="return confirm('이 게시글을 삭제하시겠습니까?')">삭제</a>
+					</td>
 				</tr>
 			<?php 
 			$counter--;

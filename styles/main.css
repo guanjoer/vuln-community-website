@@ -46,6 +46,12 @@ th:nth-child(4), td:nth-child(4) {  /* 작성일 열 */
     text-align: center;
 }
 
+td:nth-child(5) {
+    text-align: center;
+    font-style: italic;
+    text-decoration: underline;
+}
+
 th:nth-child(2), td:nth-child(2) {  /* 제목 열 */
     width: auto;  /* 나머지 공간을 제목 열에 할당 */
 }

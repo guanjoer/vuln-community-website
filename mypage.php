@@ -1,8 +1,5 @@
 <?php
-session_set_cookie_params([
-    'httponly' => true, 
-    'samesite' => 'Lax' // Cross-site 요청에 대한 보호(Lax, Strict, None)
-]);
+
 session_start();
 
 require_once 'config/db.php';
@@ -11,8 +8,7 @@ require_once 'queries.php';
 
 // 사용자 정보 가져오기
 $user_id = $_SESSION['user_id'];
-$stmt = $pdo->prepare("SELECT username, email, profile_image, password FROM users WHERE id = ?");
-$stmt->execute([$user_id]);
+$stmt = $pdo->query("SELECT username, email, profile_image, password FROM users WHERE id = $user_id");
 $user = $stmt->fetch();
 
 // 프로필 업데이트 처리
@@ -25,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === UPLOAD_ERR_OK) {
         $target_dir = "uploads/";
         $imageFileType = strtolower(pathinfo($_FILES["profile_image"]["name"], PATHINFO_EXTENSION));
-        $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+        $allowed_types = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
 
         // 파일 유형 체크
         if (in_array($imageFileType, $allowed_types)) {
@@ -132,7 +128,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required><br>
 
         <label for="profile_image">PROFILE IMAGE</label><br>
-        <img id="profile-preview-2" src="uploads/<?php echo !empty($user['profile_image']) ? htmlspecialchars($user['profile_image']) : 'default.png'; ?>" alt="프로필 이미지" width="100" height="100"><br>
+        <img id="profile-preview-2" src="uploads/<?php echo !empty($user['profile_image']) ? $user['profile_image'] : 'default.png'; ?>" alt="프로필 이미지" width="100" height="100"><br>
         <input type="file" id="profile_image" name="profile_image" accept="image/*" onchange="previewImage(event)"><br>
 
         <h2>CHAGE PASSWORD</h2>

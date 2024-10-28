@@ -92,7 +92,11 @@ $board = $result->fetch();
                 <h2>첨부 파일</h2>
                 <ul>
                     <?php foreach ($files as $file): ?>
-                        <li><a href="download.php?post_id=<?= $post_id ?>&file_id=<?= $file['id']; ?>"><?php echo $file['file_name']; ?></a></li>
+                        <li>
+                            <a href="download.php?file_path=<?= urlencode($file['file_path']); ?>">
+                                <?php echo $file['file_name']; ?>
+                            </a>
+                        </li>
                     <?php endforeach; ?>
                 </ul>
             <?php endif; ?>

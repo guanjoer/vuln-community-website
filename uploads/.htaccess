@@ -1,4 +1,0 @@
-# PHP 파일 실행 금지
-<FilesMatch "\.(php|phtml|php3|php4|php5)$">
-    Deny from all
-</FilesMatch>

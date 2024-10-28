@@ -40,7 +40,6 @@ $boards = $result->fetchAll();
         <h1>Create Post</h1>
     
         <form method="post" action="write_post_check.php" enctype="multipart/form-data">
-        <?php echo '<input type="hidden" name="_csrf" value="' . $_SESSION['csrf_token'] . '">'; ?>
             <div id="create-post-select-title">
                 <label for="board_id">SELECT BOARD</label>
                 <select id="board_id" name="board_id" required>
