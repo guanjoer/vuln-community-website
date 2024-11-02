@@ -69,8 +69,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p style="color:red;"><?php echo $error; ?></p>
         <?php endif; ?>
         <form method="post" action="login.php">
-            <input type="hidden" name="redirect_url" value="<?php echo $_SERVER['HTTP_REFERER']; ?>">
-            <input type="text" id="username" name="username" placeholder="USER NAME" required><br>
+            <input type="hidden" name="redirect_url" value="<?php echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ''; ?>"/>
+
+
+            <input type="text" id="username" name="username" placeholder="USER NAME" value="<?php echo isset($_GET['username']) ? $_GET['username'] : ''; ?>" >
+            
+
     
             <input type="password" id="password" name="password" placeholder="PASSWORD" required><br>
     

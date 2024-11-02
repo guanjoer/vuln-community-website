@@ -119,7 +119,7 @@ $posts = $stmt->fetchAll();
                 <?php endif; ?>
 
                 <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                    <a href="?page=<?php echo $i; ?>"<?php if ($i === $page) echo ' class="active"'; ?>>
+                    <a href="?page=<?php echo $i; ?>"<?php if ($i === (int)$page) echo ' class="active"'; ?>>
                         <?php echo $i; ?>
                     </a>
                 <?php endfor; ?>
@@ -131,6 +131,9 @@ $posts = $stmt->fetchAll();
             <?php endif; ?>
         </section>
     </div>
+    <input type="hidden" name="easterEgg" value="Congrats! You found the easter egg!">
+    <!-- Try Alt + Shift + x on Windows! -->
+    <link rel="canonical" accesskey="X" onclick="alert('Hi!')" />
     
 </body>
 </html>

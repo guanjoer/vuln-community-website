@@ -12,17 +12,24 @@ require_once 'queries.php';
 
 $post_id = $_GET['id'];
 $post_id = addslashes($post_id);
-$result = $pdo->query("SELECT * FROM posts WHERE id = '$post_id'");
+$result = $pdo->query("SELECT * FROM posts WHERE id = $post_id");
 $post = $result->fetch();
 
-
-$post_user_id = $post['user_id'];
-$post_user_id = $post_user_id;
-$result = $pdo->query("SELECT * FROM users WHERE id = $post_user_id");
-$post_user = $result->fetch();
+if($post) {
+    $post_user_id = (int)$post['user_id'];
+    $post_user_id = $post_user_id;
+    $result = $pdo->query("SELECT * FROM users WHERE id = $post_user_id");
+    $post_user = $result->fetch();
+}
 
 if (!$post) {
-    echo "<script>alert('존재하지 않는 게시글입니다.'); window.location.href='index.php';</script>";
+    // echo "<script>alert('존재하지 않는 게시글입니다.'); window.location.href='index.php';</script>";
+    echo "<script>alert('존재하지 않는 게시글입니다.');</script>";
+    if (isset($_SERVER['HTTP_REFERER'])) {
+        header("Location: " . $_SERVER['HTTP_REFERER']);
+    } else {
+        echo "<script>window.history.back();</script>";
+    }
     exit();
 }
 
@@ -44,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comment_content'])) {
 }
 
 // 댓글 목록 가져오기
-$result = $pdo->query("SELECT comments.*, users.username FROM comments JOIN users ON comments.user_id = users.id WHERE comments.post_id = '$post_id' ORDER BY comments.created_at ASC");
+$result = $pdo->query("SELECT comments.*, users.username, users.homepage, users.profile_image FROM comments JOIN users ON comments.user_id = users.id WHERE comments.post_id = '$post_id' ORDER BY comments.created_at ASC");
 $comments = $result->fetchAll();
 
 // 파일 정보 가져오기
@@ -114,13 +121,25 @@ $board = $result->fetch();
             <ul>
                 <?php foreach ($comments as $comment): ?>
                 <li>
-                    <p><?php echo $comment['content']; ?></p>
-                    <span class="comment-display">작성자: <strong><?php echo $comment['username']; ?></strong> | 작성일: <strong><?php echo date('Y-m-d H:i', strtotime($comment['created_at'])); ?></strong></span>
-                    <?php if (isset($_SESSION['user_id']) && isset($_SESSION['role']) && ($comment['user_id'] == $_SESSION['user_id'] || $_SESSION['role'] === 'admin')): ?>
-                        <div id="comment-delete-btn">
-                        <a href="delete_comment.php?id=<?php echo $comment['id']; ?>&post_id=<?php echo $post_id; ?>" onclick="return confirm('이 댓글을 삭제하시겠습니까?')">삭제</a>
+                    <div class="comment-author-area">
+                        <img id="post-profile" src="uploads/<?php echo !empty($comment['profile_image']) ? $comment['profile_image'] : 'default.png'; ?>" alt="프로필 이미지">
+                            <span class="comment-author">
+                                <a href="<?php echo isset($_GET['homepage']) ? $_GET['homepage'] : $comment['homepage'];?>"><?php echo $comment['username']; ?></a>
+                            </span>
+        
+                            <span class="comment-date"><?php echo date('Y-m-d H:i', strtotime($comment['created_at'])); ?></span>
+
+                            <?php if (isset($_SESSION['user_id']) && isset($_SESSION['role']) && ($comment['user_id'] == $_SESSION['user_id'] || $_SESSION['role'] === 'admin')): ?>
+                                <div id="comment-delete-btn">
+                                <a href="delete_comment.php?id=<?php echo $comment['id']; ?>&post_id=<?php echo $post_id; ?>" onclick="return confirm('이 댓글을 삭제하시겠습니까?')">삭제</a>
+                                </div>
+                            <?php endif; ?>
+
                         </div>
-                    <?php endif; ?>
+                        
+                        <p class="comment-body"><?php echo $comment['content']; ?></p>
+
+                    
                     </li>
                 <?php endforeach; ?>
             </ul>

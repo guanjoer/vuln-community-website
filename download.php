@@ -14,11 +14,11 @@ if (isset($_GET['file_path'])) {
         readfile($file_path);
         exit;
     } else {
-        echo "<script>alert('파일을 찾을 수 없습니다.'); window.location.href='index.php';</script>";
+        echo "<script>alert(". $file_path . " '파일을 찾을 수 없습니다.'); history.back();</script>";
         exit;
     }
 } else {
-    echo "<script>alert('잘못된 요청입니다.'); window.location.href='index.php';</script>";
+    echo "<script>alert('잘못된 요청입니다.'); history.back();</script>";
     exit;
 }
 ?>

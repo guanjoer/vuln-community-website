@@ -32,7 +32,7 @@ body {
 
 
 #sidebar {
-	min-width: 100px;
+	min-width: 200px;
 	overflow: hidden;
 }
 
@@ -126,7 +126,7 @@ body {
 	border-radius: 10px;
 	/* height: auto; */
     aspect-ratio: 16 / 9;
-	min-width: 500px;
+	min-width: 800px;
 }
 
 #content h1 {
@@ -251,7 +251,7 @@ ul li span {
 }
 
 #pagination .active {
-    color: #c78ec7;
+    color: #8989d8;
 	font-weight: bold;
 }
 

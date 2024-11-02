@@ -8,13 +8,14 @@ require_once 'queries.php';
 
 // 사용자 정보 가져오기
 $user_id = $_SESSION['user_id'];
-$stmt = $pdo->query("SELECT username, email, profile_image, password FROM users WHERE id = $user_id");
+$stmt = $pdo->query("SELECT username, email, profile_image, homepage, password FROM users WHERE id = $user_id");
 $user = $stmt->fetch();
 
 // 프로필 업데이트 처리
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $email = $_POST['email'];
+    $homepage = $_POST['homepage'];
     $profile_image = $user['profile_image']; // 기존 이미지
 
     // 프로필 이미지 업로드 처리
@@ -74,8 +75,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // 사용자 정보 업데이트
-    $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ?, profile_image = ? WHERE id = ?");
-    $stmt->execute([$username, $email, $profile_image, $user_id]);
+    $stmt = $pdo->prepare("UPDATE users SET username = ?, email = ?, profile_image = ?, homepage= ? WHERE id = ?");
+    $stmt->execute([$username, $email, $profile_image, $homepage, $user_id]);
 
     // 업데이트된 정보를 세션에 반영
     $_SESSION['username'] = $username;
@@ -122,10 +123,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form method="post" action="mypage.php" enctype="multipart/form-data">
         <label for="username">USER NAME</label>
-        <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required><br>
+        <input type="text" id="username" name="username" value="<?php echo $user['username']; ?>" required><br>
 
         <label for="email">E-MAIL</label>
-        <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['email']); ?>" required><br>
+        <input type="email" id="email" name="email" value="<?php echo $user['email']; ?>" required><br>
+
+        <label for="homepage">Home page</label>
+        <input type="text" id="homepage" name="homepage" value="<?php echo $user['homepage']; ?>" ><br>
 
         <label for="profile_image">PROFILE IMAGE</label><br>
         <img id="profile-preview-2" src="uploads/<?php echo !empty($user['profile_image']) ? $user['profile_image'] : 'default.png'; ?>" alt="프로필 이미지" width="100" height="100"><br>

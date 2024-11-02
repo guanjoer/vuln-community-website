@@ -78,6 +78,7 @@ if (isset($_GET['id'])) {
     <?php endif; ?>
 </head>
 <body>
+    
     <?php require_once 'header.php' ?>
 
     <nav id="search-bar">
@@ -96,7 +97,17 @@ if (isset($_GET['id'])) {
             <?php else: ?>
                 <h2>전체글</h2>
             <?php endif; ?>
-            <p>현재 페이지: <?php echo $page; ?></p>
+            <p>현재 페이지: 
+            <?php if(isset($_GET['page'])): ?>
+                <script>
+                    const params = new URLSearchParams(document.location.search);
+                    const pageValue = params.get('page');
+                    document.write(pageValue);
+                </script>
+            <?php else: ?>
+                1               
+             <?php endif; ?>   
+            </p>
 
             <?php if (isset($_GET['id']) && $posts): ?>
             <table>
@@ -175,7 +186,7 @@ if (isset($_GET['id'])) {
                     <?php endif; ?>
 
                     <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                        <a href="?page=<?php echo $i; ?><?php echo isset($board_id) ? '&id=' . $board_id : ''; ?>"<?php if ($i === $page) echo ' class="active"'; ?>>
+                        <a href="?page=<?php echo $i; ?><?php echo isset($board_id) ? '&id=' . $board_id : ''; ?>"<?php if ($i === (int)$page) echo ' class="active"'; ?>>
                             <?php echo $i; ?>
                         </a>
                     <?php endfor; ?>

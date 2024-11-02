@@ -10,9 +10,9 @@ require_once 'queries.php';
 
 
 $query = isset($_GET['q']) ? $_GET['q'] : '';
+$output = $query;
 $query = trim($query);
 $query = strtolower($query);
-$output = $query;
 $query = addslashes($query);
 
 if (empty($query)) {
@@ -70,9 +70,36 @@ if (!empty($board_ids)) {
 
     <div id="main-container">
         <?php require_once 'sidebar.php'?>
+        
+        
         <section id="content">
+        <!-- <script>
+            const isSafeInput = x => !/<script|<img|<input|<.*on/is.test(x);
 
-        <h2>검색어: "<?php echo $output; ?>"</h2>
+            function XSSProtection(input) {
+                return input.replace(/script|onerror/gi, '')
+            }
+            
+            const searchTerms = XSSProtection(`<?php echo $output; ?>`);
+
+            if(isSafeInput(searchTerms)) {
+                document.addEventListener('DOMContentLoaded', () => {
+                    document.getElementById('query').innerHTML = `검색어: ${searchTerms}`;
+                });
+            } else {
+                alert('Something went wrong!');
+                history.back();
+            }
+            
+        </script> -->
+
+        <!-- <h2 id="query"></h2> -->
+
+        <!-- <h2>검색어: <?php echo "<script>document.write(searchTerms)</script>"; ?></h2> -->
+         
+        <h2>검색어: <?php echo $output; ?></h2>
+        
+
         <?php if (count($posts) > 0): ?>
             <table>
                 <thead>

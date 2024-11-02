@@ -134,5 +134,31 @@ textarea:focus {
 #comment-delete-btn a {
 	text-decoration: underline;
 	font-weight: 500;
-	color: #291f1f;
+	color: #8d8d8d;
+	font-style: italic;
+}
+
+.comment-author-area{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.comment-author {
+	margin: 0 10px;
+	font-size: 1rem;
+}
+
+.comment-author a:hover {
+	text-decoration: underline;
+}
+
+.comment-body {
+	padding-left: 3.5rem;
+    margin-top: 0;
+}
+
+.comment-date {
+	margin-right: 10px;
+	color: #ababab;
 }
