@@ -63,7 +63,7 @@ if (!empty($board_ids)) {
 
     <nav id="search-bar">
         <form method="get" action="search.php">
-            <input type="text" name="q" placeholder="검색어를 입력하세요" required>
+            <input type="text" name="q" placeholder="Type to Search..." required>
             <button type="submit">검색</button>
         </form>
     </nav>
@@ -73,7 +73,7 @@ if (!empty($board_ids)) {
         
         
         <section id="content">
-        <!-- <script>
+        <script>
             const isSafeInput = x => !/<script|<img|<input|<.*on/is.test(x);
 
             function XSSProtection(input) {
@@ -91,13 +91,13 @@ if (!empty($board_ids)) {
                 history.back();
             }
             
-        </script> -->
+        </script>
 
-        <!-- <h2 id="query"></h2> -->
+        <h2 id="query"></h2>
 
         <!-- <h2>검색어: <?php echo "<script>document.write(searchTerms)</script>"; ?></h2> -->
          
-        <h2>검색어: <?php echo $output; ?></h2>
+        <!-- <h2>검색어: <?php echo $output; ?></h2> -->
         
 
         <?php if (count($posts) > 0): ?>

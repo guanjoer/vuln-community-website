@@ -32,6 +32,7 @@ $boards = $result->fetchAll();
     <title>글쓰기</title>
     <link rel="stylesheet" href="styles/base.css">
     <link rel="stylesheet" href="styles/write.css">
+    <link rel="icon" href="favicon/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <?php require_once 'header.php' ?>

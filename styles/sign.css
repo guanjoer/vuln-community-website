@@ -3,6 +3,7 @@ h1 {
 	font-style: inherit;
 	color: rgb(52, 52, 52);
 	margin: 4rem 0;
+	margin-bottom: 1rem;
 }
 
 #login-container {
@@ -36,7 +37,7 @@ form button {
 	width: 70%;
 	font-size: 1.3rem;
 	font-style: inherit;
-	font-weight: 100;
+	font-weight: 500;
 }
 
 form button:hover {
@@ -51,4 +52,18 @@ form button:hover {
 
 #account-message a:hover{
 	text-decoration: underline;
+}
+
+#login-error {
+	color: #de0f0f;
+    background: #fadcdc;
+    width: 30%;
+    text-align: center;
+    margin: 0 auto 0.5rem auto;
+    padding: 1rem 0.9rem;
+    border-radius: 4px;
+}
+
+#username {
+	margin-top: 1rem;
 }

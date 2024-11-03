@@ -90,7 +90,7 @@ $board = $result->fetch();
 				<img id="post-profile" src="uploads/<?php echo !empty($post_user['profile_image']) ? $post_user['profile_image'] : 'default.png'; ?>" alt="프로필 이미지">
                 <div class="post-profile-info-2">
                     <p><?php echo $post_user['username'] ?></p>
-                    <span><?php echo date('Y-m-d H:i', strtotime($post_user['created_at'])); ?></span>
+                    <span><?php echo date('Y-m-d H:i', strtotime($post['created_at'])); ?></span>
                 </div>
             </div>
                 <p class="post-content"><?php echo $post['content']; ?></p>

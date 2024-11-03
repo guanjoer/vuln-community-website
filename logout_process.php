@@ -11,8 +11,11 @@ if (isset($_GET['logout'])) {
     
     $redirect_url = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
 
-    if ($redirect_url && strpos($redirect_url, '/admin') !== false) {
+    if ($redirect_url && strpos($redirect_url, '/admin') == true) {
         header("Location: ../index.php"); 
+        exit();
+    } elseif($redirect_url && strpos($redirect_url, '/mypage') == true) {
+        header("Location: index.php"); 
         exit();
     } else {
         if ($redirect_url) {

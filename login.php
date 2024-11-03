@@ -26,7 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // session_regenerate_id(true);
         
         
-        $redirect_url = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : 'index.php';
+        // $redirect_url = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : 'index.php';
+        $redirect_url = isset($_POST['redirect_url']) && !empty($_POST['redirect_url']) ? $_POST['redirect_url'] : 'index.php';
         // var_dump($redirect_url);
         if (strpos($redirect_url, '/signup') || strpos($redirect_url, '/signup_success.php')) {
             $redirect_url = 'index.php';
@@ -40,7 +41,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: " . $redirect_url);
         exit();
     } else {
-        echo "<script>alert('로그인에 실패했습니다. 다시 시도해주세요.'); history.back();</script>";
+        echo "<script>alert('로그인에 실패했습니다. 다시 시도해주세요.');</script>";
+
+        $error_url = "login.php?error=true&username=" . $username;
+        header("Location: " . $error_url);
         exit();
     }
 }
@@ -64,9 +68,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php require_once 'header.php' ?>
 
     <div id="login-container">
-        <h1>Login</h1>
-        <?php if (isset($error)): ?>
-            <p style="color:red;"><?php echo $error; ?></p>
+        <?php if(!isset($_GET['error'])): ?>
+            <h1 style="margin-bottom:4rem;">Login</h1>
+        <?php else: ?>
+            <h1>Login</h1>
+        <?php endif;?>
+
+        <?php if (isset($_GET['error'])): ?>
+            <p id="login-error"><?php echo "입력하신 아이디 및 비밀번호를 확인하세요."; ?></p>
         <?php endif; ?>
         <form method="post" action="login.php">
             <input type="hidden" name="redirect_url" value="<?php echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : ''; ?>"/>
