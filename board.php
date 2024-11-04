@@ -1,7 +1,7 @@
 <?php
 // session_set_cookie_params([
 //     'httponly' => true, 
-//     'samesite' => 'Lax' // Cross-site 요청에 대한 보호(Lax, Strict, None)
+//     'samesite' => 'Lax' 
 // ]);
 
 session_start();
@@ -21,7 +21,7 @@ $new_order = $order === 'ASC' ? 'desc' : 'asc';
 
 if (isset($_GET['id'])) {
     $board_id = $_GET['id'];
-    $board_id = addslashes($board_id);
+    $board_id = $board_id;
 
     $total_posts_query = $pdo->query("SELECT COUNT(*) FROM posts WHERE board_id = '$board_id'");
     $total_posts = $total_posts_query->fetchColumn();

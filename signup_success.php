@@ -29,7 +29,7 @@ $username = $_SESSION['username'];
     <?php require_once 'header.php' ?>
     
     <div id="main-container">
-        <h1><?php echo htmlspecialchars($username); ?>님, 회원가입을 축하합니다!</h1>
+        <h1>🎉 <?php echo htmlspecialchars($username); ?>님, 회원가입을 축하합니다! 🎉</h1>
         <p>이제 로그인하여 사이트를 이용할 수 있습니다.</p>
         
         <button onclick="location.href='login.php'">로그인 하기</button>

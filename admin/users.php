@@ -70,16 +70,16 @@ $users = $stmt->fetchAll();
 			<?php foreach ($users as $user): ?>
 			<tr>
 				<td class="board-name">
-					<?php echo htmlspecialchars($user['username']); ?>
+					<?php echo $user['username']; ?>
 				</td>
 				<td>
-					<?php echo htmlspecialchars($user['email']); ?>
+					<?php echo $user['email']; ?>
 				</td>
 				<td>
 					<?php echo date('Y-m-d', strtotime($user['created_at'])); ?>
 				</td>
 				<td>
-					<?php echo htmlspecialchars($user['role']); ?>
+					<?php echo $user['role']; ?>
 					<!-- <a class="board-btn" href="edit_board.php?id=<?php echo $board['id']; ?>">수정</a> -->
 				</td>
 				<td>

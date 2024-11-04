@@ -25,7 +25,7 @@ $new_order = $order === 'ASC' ? 'desc' : 'asc';
 $posts_per_page = 10;
 
 // offset + 1의 레코드 부터 데이터를 가져옴 // 즉 offest = 15이면 16번째 레코드 부터 데이터를 가져옴
-$offset = ($page - 1) * $posts_per_page;
+$offset = ((int)$page - 1) * $posts_per_page;
 
 // 전체 글의 수
 $total_posts_stmt = $pdo->query("SELECT COUNT(*) FROM posts");
@@ -90,7 +90,7 @@ $posts = $stmt->fetchAll();
                 <tbody>
                     <?php 
                     // $counter = count($posts); 
-                    $counter = $total_posts - ($page - 1) * $posts_per_page;
+                    $counter = $total_posts - ((int)$page - 1) * $posts_per_page;
                     foreach ($posts as $post): 
                     ?>
                         <tr>
@@ -114,6 +114,8 @@ $posts = $stmt->fetchAll();
             <?php endif; ?>
             
             <?php if($posts): ?>
+            
+            
             <!-- 페이지 네비게이션 -->
             <div id="pagination">
                 <?php if ($page > 1): ?>

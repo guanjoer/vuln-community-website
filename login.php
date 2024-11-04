@@ -26,10 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // session_regenerate_id(true);
         
         
-        // $redirect_url = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : 'index.php';
-        $redirect_url = isset($_POST['redirect_url']) && !empty($_POST['redirect_url']) ? $_POST['redirect_url'] : 'index.php';
+        $redirect_url = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : 'index.php';
+        // $redirect_url = isset($_POST['redirect_url']) && !empty($_POST['redirect_url']) ? $_POST['redirect_url'] : 'index.php';
         // var_dump($redirect_url);
-        if (strpos($redirect_url, '/signup') || strpos($redirect_url, '/signup_success.php')) {
+        if (strpos($redirect_url, '/signup') || strpos($redirect_url, '/signup_success.php') || strpos($redirect_url, '/login')) {
             $redirect_url = 'index.php';
         }
 
@@ -41,8 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: " . $redirect_url);
         exit();
     } else {
-        echo "<script>alert('로그인에 실패했습니다. 다시 시도해주세요.');</script>";
-
         $error_url = "login.php?error=true&username=" . $username;
         header("Location: " . $error_url);
         exit();
