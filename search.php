@@ -76,30 +76,30 @@ if (!empty($board_ids)) {
         
         <section id="content">
         <script>
-            // const isSafeInput = x => !/<script|<img|<input|<.*on/is.test(x);
+            const isSafeInput = x => !/<script|<img|<input|<.*on/is.test(x);
 
-            // function XSSProtection(input) {
-            //     return input.replace(/script|onerror/gi, '')
-            // }
+            function XSSProtection(input) {
+                return input.replace(/script|onerror/gi, '')
+            }
             
-            // const searchTerms = XSSProtection(`<?php echo $output; ?>`);
+            const searchTerms = XSSProtection(`<?php echo $output; ?>`);
 
-            // if(isSafeInput(searchTerms)) {
-            //     document.addEventListener('DOMContentLoaded', () => {
-            //         document.getElementById('query').innerHTML = `검색어: ${searchTerms}`;
-            //     });
-            // } else {
-            //     alert('Something went wrong!');
-            //     history.back();
-            // }
+            if(isSafeInput(searchTerms)) {
+                document.addEventListener('DOMContentLoaded', () => {
+                    document.getElementById('query').innerHTML = `검색어: ${searchTerms}`;
+                });
+            } else {
+                alert('Something went wrong!');
+                history.back();
+            }
 
-            const searchTerms = '<?php echo $_GET['q'];?>' 
+            // const searchTerms = '<?php echo $_GET['q'];?>' 
             
         </script>
 
         <!-- <script>const searchTerms = '<?php echo $_GET['q'];?>' </script> -->
 
-        <!-- <h2 id="query"></h2> -->
+        <h2 id="query"></h2>
 
         <h2>검색어: <?php echo "<script>document.write(searchTerms)</script>"; ?></h2>
          

