@@ -2,6 +2,14 @@
 
 session_start();
 
+if(!isset($_SESSION['user_id'])) {
+    echo "<script>
+            alert('로그인이 필요합니다.');
+            window.location.href = 'login.php';
+        </script>";
+    exit();
+}
+
 require_once 'config/db.php';
 
 require_once 'queries.php';
@@ -47,16 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // 비밀번호 변경 처리
-    if (!empty($_POST['current_password']) && !empty($_POST['new_password']) && !empty($_POST['confirm_password'])) {
-        $current_password = $_POST['current_password'];
+    if (!empty($_POST['new_password']) && !empty($_POST['confirm_password'])) {
+
         $new_password = $_POST['new_password'];
         $confirm_password = $_POST['confirm_password'];
 
-        // 현재 비밀번호 검증
-        if (password_verify($current_password, $user['password'])) {
-            // 새로운 비밀번호 확인
+
             if ($new_password === $confirm_password) {
-                // 비밀번호 해시화
                 $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
 
                 // 비밀번호 업데이트
@@ -68,10 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 echo "<script>alert('새 비밀번호가 일치하지 않습니다.'); history.back();</script>";
                 exit();
             }
-        } else {
-            echo "<script>alert('현재 비밀번호가 올바르지 않습니다.'); history.back();</script>";
-            exit();
-        }
     }
 
     // 사용자 정보 업데이트
@@ -136,8 +137,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="file" id="profile_image" name="profile_image" accept="image/*" onchange="previewImage(event)"><br>
 
         <h2>CHAGE PASSWORD</h2>
-        <label for="current_password">Current Password</label>
-        <input type="password" id="current_password" name="current_password" placeholder="Enter a current password"><br>
 
         <label for="new_password">New Password</label>
         <input type="password" id="new_password" name="new_password" placeholder="Enter a new password"><br>

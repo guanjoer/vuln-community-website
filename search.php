@@ -75,7 +75,7 @@ if (!empty($board_ids)) {
         
         
         <section id="content">
-        <script>
+        <!-- <script>
             const isSafeInput = x => !/<script|<img|<input|<.*on/is.test(x);
 
             function XSSProtection(input) {
@@ -95,15 +95,15 @@ if (!empty($board_ids)) {
 
             // const searchTerms = '<?php echo $_GET['q'];?>' 
             
-        </script>
+        </script> -->
 
         <!-- <script>const searchTerms = '<?php echo $_GET['q'];?>' </script> -->
 
-        <h2 id="query"></h2>
+        <!-- <h2 id="query"></h2>
 
-        <h2>검색어: <?php echo "<script>document.write(searchTerms)</script>"; ?></h2>
+        <h2>검색어: <?php echo "<script>document.write(searchTerms)</script>"; ?></h2> -->
          
-        <!-- <h2>검색어: <?php echo $output; ?></h2> -->
+        <h2>검색어: <?php echo $output; ?></h2>
         
 
         <?php if (count($posts) > 0): ?>
